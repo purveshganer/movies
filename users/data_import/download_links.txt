@@ -1,0 +1,13 @@
+I am using IMDB dataset for now but u can use any of the links given below.
+Store them in a folder named dataset. This folder should be created on the same level as this text file.
+If you change the database then you will have to create the import scripts.
+
+------------------------------------------------------------------------------------------------------------------
+
+IMDB link: https://datasets.imdbws.com/
+
+zenodo link: https://zenodo.org/records/8276077
+
+Kaggle link: https://www.kaggle.com/datasets/muqarrishzaib/tmdb-10000-movies-dataset
+
+------------------------------------------------------------------------------------------------------------------
