@@ -1,3 +1,7 @@
+"""
+Set up logging to write to a file and display logs in the console (CMD)
+Helps track the flow of execution and understand how the code is working
+"""
 import logging
 import os
 
@@ -16,4 +20,12 @@ consol_handler.setFormatter(consol_formatter)
 logger.addHandler(file_handler)
 logger.addHandler(consol_handler)
 
-logging.error("HI Test")
+
+"""
+Creating a base class which will be used to create import script.
+its work will be to create a session.
+
+"""
+class Importing:
+    def __init__(self):
+        pass
