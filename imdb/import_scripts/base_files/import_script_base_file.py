@@ -7,9 +7,9 @@ import os
 
 class CreateLoggingFile:
     def __init__(self, table_name):
-        self.table_name = table_name
+        self.table_name = str(table_name)
     
-    def create_log_file(self):
+    def create_log_file(self)->None:
         base_path = os.getcwd()
         logger = logging.getLogger()
         logger.setLevel(logging.INFO)
@@ -79,7 +79,7 @@ class BaseImportScript:
         
         logging.info(f"Finished reading file: {file_path.split('/')[-1]}")
 
-    def base_importer(self, records:dict, n:int):
+    def base_importer(self, records:dict, n:int)->None:
         try:
             logging.info(f"Started the importing process. On {self.model} table.")
             data_objects = []
