@@ -10,11 +10,11 @@ class CreateLoggingFile:
         self.table_name = str(table_name)
     
     def create_log_file(self)->None:
-        base_path = os.getcwd()
+        base_path = os.path.dirname(os.path.abspath(__file__))
         logger = logging.getLogger()
         logger.setLevel(logging.INFO)
 
-        file_handler = logging.FileHandler(os.path.join(base_path,"../../data_import","dataset/",f"{self.table_name}.log"), "w")
+        file_handler = logging.FileHandler(os.path.join(base_path,"../../data_import","dataset/logs/",f"{self.table_name}.log"), "w")
         file_formatter = logging.Formatter("%(asctime)s  - %(levelname)s  -  %(message)s  ")
         file_handler.setFormatter(file_formatter)
 
@@ -81,12 +81,11 @@ class BaseImportScript:
 
     def base_importer(self, records:list, n:int)->None:
         try:
-            logging.info(f"Started the importing process. On {self.model} table.")
             data_objects = []
 
             for record in records:
                 # Make sure record keys match the model fields exactly (e.g., 'name', 'age', etc.).
-                self.model(**record)
+                data_objects.append(self.model(**record))
             self.model.objects.bulk_create(data_objects)
 
             logging.info(f"Successfully imported {n} records.")
