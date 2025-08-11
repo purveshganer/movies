@@ -82,6 +82,8 @@ class TitleAkasImportScript(BaseImportScript):
             if record == None:
                 break
             preprossed_record = self.preprocess(record)
+            if preprossed_record == None:
+                continue
             records.append(preprossed_record)
             i += 1
             if i % 5000 == 0:

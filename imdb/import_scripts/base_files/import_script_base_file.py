@@ -56,6 +56,7 @@ class BaseImportScript:
         logging.info(f"Finished reading file: {file_path.split('/')[-1]}")
 
     def base_importer(self, records:list, n:int)->None:
+        logging.info(f"Starting Importing Records in {self.model} table.")
         try:
             data_objects = []
 
