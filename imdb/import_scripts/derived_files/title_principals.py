@@ -1,15 +1,7 @@
 import os
 import sys
 import logging
-# 1. Add project root to sys.path (go from this file up to manage.py folder)
-current_file = os.path.abspath(__file__)
-project_root = os.path.abspath(os.path.join(current_file, "../../../.."))
-sys.path.insert(0, project_root)
-
-# 2. Setup Django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "movies.settings")
-import django
-django.setup()
+import common as bootstrap
 
 # 3. Now you can import your base script
 from imdb.import_scripts.base_files.import_script_base_file import BaseImportScript
@@ -66,25 +58,6 @@ class TitlePrincipalsImportScript(BaseImportScript):
     
     def import_rows(self, records:list, n:int):
         super().base_importer(records=records, n = n)
-    
-    def run(self)->None:
-        super().create_logging(name = self.file_name)
-        i = 0
-        records = []
-        while True:
-            record = self.reader()
-            if record == None:
-                break
-            preprossed_record = self.preprocess(record)
-            if preprossed_record == None:
-                continue
-            records.append(preprossed_record)
-            i += 1
-            if i % 5000 == 0:
-                self.import_rows(records=records, n = 5000)
-                records = []
-        self.import_rows(records=records, n = len(records))
-        logging.info(f"Successfully imported {i} records.")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="To take the dataset file path using CLI.")
