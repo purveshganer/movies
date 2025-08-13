@@ -19,9 +19,9 @@ class TitleAkasImportScript(BaseImportScript):
         super().__init__(TitleAkas)
         self.records = super().base_reader(file_path=self.file_path, offset=0)
         self.record_to_model = {
-            "titleId" : "title",
+            "titleId" : "tconst",
             "ordering" : "ordering",
-            "title" : "title_text",
+            "title" : "title",
             "region" : "region",
             "language" : "language",
             "types" : "types",
@@ -39,15 +39,14 @@ class TitleAkasImportScript(BaseImportScript):
 
     def preprocess(self, record)->dict:
         record = {self.record_to_model[key]:value for key, value in record.items()}
-        if not record.get("title_text") and record.get('title_text') == r"\N":
-            return None
         if not record.get("title") and record.get('title') == r"\N":
             return None
-        if len(record.get("title_text")) > 500:
+        if not record.get("tconst") and record.get('tconst') == r"\N":
+            return None
+        if len(record.get("title")) > 500:
             logging.error(f"Got an abnormal record {record}")
             return None
-        record["title"] = self.title_dict.get(record["title"])
-        record["title_text"] = record.get("title_text").upper()
+        record["title"] = record.get("title").upper()
         region = record.get("region")
         if region is not None and region.strip() == r"\N":
             record["region"] = None

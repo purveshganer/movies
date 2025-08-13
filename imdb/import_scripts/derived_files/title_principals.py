@@ -19,8 +19,8 @@ class TitlePrincipalsImportScript(BaseImportScript):
         super().__init__(TitlePrincipals)
         self.records = super().base_reader(file_path=self.file_path, offset=0)
         self.record_to_model = {
-            "tconst" : "title",
-            "nconst" : "name",
+            "tconst" : "tconst",
+            "nconst" : "nconst",
             "ordering" : "ordering",
             "category" : "category",
             "job" : "job",
@@ -35,16 +35,16 @@ class TitlePrincipalsImportScript(BaseImportScript):
 
     def preprocess(self, record)->dict:
         record = {self.record_to_model[key]:value for key, value in record.items()}
-        if (record.get("title") == None or record.get("title") == r"\N") and \
-            (record.get("name") == None or record.get("name") == r"\N"):
+        if (record.get("tconst") == None or record.get("tconst") == r"\N") and \
+            (record.get("nconst") == None or record.get("nconst") == r"\N"):
             return None
         try:
-            record["title"] = TitleBasics.objects.get(tconst = record.get("title"))
+            record["tconst"] = TitleBasics.objects.get(tconst = record.get("tconst"))
         except Exception as e:
             logging.exception(f"tconst was not found for {record}")
             return None
         try:
-            record["name"] = NameBasics.objects.get(nconst = record.get("name"))
+            record["nconst"] = NameBasics.objects.get(nconst = record.get("nconst"))
         except Exception as e:
             logging.exception(f"nconst was not found for {record}")
             return None

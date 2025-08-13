@@ -48,7 +48,7 @@ class TitleCrew(models.Model):
     # directors: Comma-separated nconst values
     # writers: Comma-separated nconst values
 
-    title = models.OneToOneField(TitleBasics, on_delete=models.CASCADE, primary_key=True)
+    tconst = models.OneToOneField(TitleBasics, on_delete=models.CASCADE, primary_key=True)
     directors = models.ManyToManyField(NameBasics, related_name='directed_titles')
     writers = models.ManyToManyField(NameBasics, related_name='written_titles')
 
@@ -59,7 +59,7 @@ class TitleRatings(models.Model):
     # averageRating: Weighted average rating
     # numVotes: Total number of user votes
 
-    title = models.OneToOneField(TitleBasics, on_delete=models.CASCADE, primary_key=True)
+    tconst = models.OneToOneField(TitleBasics, on_delete=models.CASCADE, primary_key=True)
     average_rating = models.FloatField()
     num_votes = models.IntegerField()
 
@@ -75,7 +75,7 @@ class TitleAkas(models.Model):
     # attributes: Additional info→ Contextual attributes like “IMAX”, “3D”, etc. (can be null).
     # isOriginalTitle: Original title flag→ Boolean (0 or 1). 1 indicates this is the original title used in that region/language.
 
-    title = models.ForeignKey(TitleBasics, on_delete=models.CASCADE)
+    tconst = models.ForeignKey(TitleBasics, on_delete=models.CASCADE)
     ordering = models.IntegerField()
     title_text = models.CharField(max_length=500)
     region = models.CharField(max_length=20, null=True)
@@ -107,8 +107,8 @@ class TitlePrincipals(models.Model):
     # job: Specific job title, if available (or \N)
     # characters: Character names portrayed (e.g. ["John Doe"], or \N)
 
-    title = models.ForeignKey(TitleBasics, on_delete=models.CASCADE)
-    name = models.ForeignKey(NameBasics, on_delete=models.CASCADE)
+    tconst = models.ForeignKey(TitleBasics, on_delete=models.CASCADE)
+    nconst = models.ForeignKey(NameBasics, on_delete=models.CASCADE)
     ordering = models.IntegerField()
     category = models.CharField(max_length=100)
     job = models.CharField(max_length=255, null=True)

@@ -5,7 +5,7 @@ import common as bootstrap
 
 # 3. Now you can import your base script
 from imdb.import_scripts.base_files.import_script_base_file import BaseImportScript
-from imdb.models import TitleCrew, TitleBasics
+from imdb.models import TitleCrew, TitleBasics, NameBasics
 import argparse
 from typing import Optional, Any, Dict
 """
@@ -19,7 +19,7 @@ class TitleCrewImportScript(BaseImportScript):
         super().__init__(TitleCrew)
         self.records = super().base_reader(file_path=self.file_path, offset=0)
         self.record_to_model = {
-            "tconst" : "title",
+            "tconst" : "tconst",
             "directors" : "directors",
             "writers" : "writers",
         }
@@ -32,16 +32,36 @@ class TitleCrewImportScript(BaseImportScript):
 
     def preprocess(self, record)->dict:
         record = {self.record_to_model[key]:value for key, value in record.items()}
-        if not record.get("title") and record.get('title') == r"\N":
-            return None
-        tconst = TitleBasics.objects.get(tconst = record.get("title"))
-        record["title"] = tconst 
+        tconst = TitleBasics.objects.get(tconst=record.get("tconst"))
+        record["tconst"] = tconst
         writers = record.get("writers")
         if writers is not None and writers.strip() == r"\N":
             record["writers"] = None
         directors = record.get("directors")
         if directors is not None and directors.strip() == r"\N":
             record["directors"] = None
+        crew_obj, _ = TitleCrew.objects.get_or_create(title=tconst)
+        directors_list = record.get("directors")
+        if directors_list:
+            for director_id in directors_list:
+                if director_id and director_id != r"\N":
+                    try:
+                        director_obj = NameBasics.objects.get(nconst=director_id)
+                        crew_obj.directors.add(director_obj)
+                    except NameBasics.DoesNotExist:
+                        pass 
+        writers_list = record.get("writers")
+        if writers_list:
+            for writer_id in writers_list:
+                if writer_id and writer_id != r"\N":
+                    try:
+                        writer_obj = NameBasics.objects.get(nconst=writer_id)
+                        crew_obj.writers.add(writer_obj)
+                    except NameBasics.DoesNotExist:
+                        pass
+        record.pop("directors", None)
+        record.pop("writers", None)
+        
         return record
     
     def import_rows(self, records:list, n:int):

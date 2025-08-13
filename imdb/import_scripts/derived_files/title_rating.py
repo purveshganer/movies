@@ -19,7 +19,7 @@ class TitleRatingsImportScript(BaseImportScript):
         super().__init__(TitleRatings)
         self.records = super().base_reader(file_path=self.file_path, offset=0)
         self.record_to_model = {
-            "tconst" : "title",
+            "tconst" : "tconst",
             "averageRating" : "average_rating",
             "numVotes" : "num_votes",
         }
@@ -32,10 +32,10 @@ class TitleRatingsImportScript(BaseImportScript):
 
     def preprocess(self, record)->dict:
         record = {self.record_to_model[key]:value for key, value in record.items()}
-        if not record.get("title") and record.get('title') == r"\N":
+        if not record.get("tconst") and record.get('tconst') == r"\N":
             return None
-        tconst = TitleBasics.objects.get(tconst = record.get("title"))
-        record["title"] = tconst 
+        tconst = TitleBasics.objects.get(tconst = record.get("tconst"))
+        record["tconst"] = tconst 
         average_rating = record.get("average_rating")
         if average_rating is not None and average_rating.strip() == r"\N":
             record["average_rating"] = None
