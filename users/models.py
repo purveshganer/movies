@@ -7,10 +7,9 @@ class User(models.Model):
         ('manager', 'Manager'),
         ('admin', 'Admin'),
     ]
-
+    name = models.CharField(max_length=255)
     email = models.EmailField(unique=True, max_length=255, db_index=True)
     username = models.CharField(max_length=150, unique=True, db_index=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
     is_active = models.BooleanField(default=True)
-    password = models.CharField(max_length=30, db_index=True)
-
+    password = models.CharField(max_length=128, db_index=True)

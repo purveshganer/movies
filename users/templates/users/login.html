@@ -1,64 +1,64 @@
-<!DOCTYPE html>
-<html lang = "en">
+{% load static %}
+<link rel="stylesheet" href="{% static 'users/styling/login_registration.css' %}">
+<script src="{% static 'users/js_files/auth.js' %}"></script>
+
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name = "vieport", content="width=divice-width , initial-scale=1.0">
-    <title>movies_login_page</title>
-    <style>
-        body{
-            background-color: black;
-            margin: 0;
-            font-family: sans-serif;
-        }
-        /* Container for positioning at top center */
-        .search-container{
-            width: 50%;
-            margin: 20px auto;
-        }
-        /* Search input style */
-        .search-box{
-            width: 500px;
-            padding: 10px 40px 10px 15px;
-            background-color: black;
-            border: 2px solid blue;
-            border-radius: 50px;
-            color: white; /* Typed text color */
-            font-size: 20px;
-            outline: none;
-        }
-        /* Placeholder text style */
-        .searchbar::placeholder{
-            color: rgba(255,255,255,0.5);
-        }
-        /* Search icon inside input */
-        .search-icon{
-            right: 10px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-            pointer-events: none;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login</title>
+  <link rel="stylesheet" href="{% static 'styling/login_registration.css' %}" />
 </head>
 <body>
-    <div class = "search-container">
-        <input type="text" class="search-box" placeholder="Search here">
-        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="blue" stroke-width="2" storke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-    </div>
-    <script>
-        const searchBox = document.querySelector('.search-box');
-        // Prevent Enter key from doing anything & stop typing
-        searchbox.addEventListener('keyword', function(event){
-            if (event.key === 'Enter'){
-                event.preventDefault();
-                searchBox.blue();
-            }
-        });
-    </script>
+  <main class="page">
+    <section class="card" aria-labelledby="login-title">
+      <h1 id="login-title">Welcome back</h1>
+      <p class="subtitle">Log in with your username.</p>
+
+      <form id="loginForm" action="/api/login" method="post" novalidate>
+        <div class="input">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            autocomplete="username"
+            placeholder="your_username"
+            required />
+          <div class="field-error" aria-live="polite"></div>
+        </div>
+
+        <div class="input">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            minlength="8"
+            autocomplete="current-password"
+            placeholder="••••••••"
+            required />
+          <button class="toggle" type="button" data-target="#password" aria-label="Toggle password visibility">Show</button>
+          <div class="field-error" aria-live="polite"></div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="submit">Log in</button>
+          <p class="muted">No account? <a href="{% url 'register_page' %}">Create one</a></p>
+        </div>
+
+        <div class="form-alert" role="alert" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="{% static 'js_files/auth.js' %}"></script>
+  <script>
+    bindForm('loginForm', {
+      endpoint: '/users/api/login',             // your Django login API
+      onSuccessRedirect: '/dashboard'     // redirect after login
+    });
+  </script>
 </body>
 </html>
