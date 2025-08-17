@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Splash Screen</title>
+
+  <style>
+    /* === Splash Page CSS === */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #121212; /* dark background */
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .splash {
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .splash img {
+      width: 400px;
+      height: 400px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+
+  <script>
+    // === Splash Page JS ===
+    setTimeout(function(){
+      // Redirect after 3 seconds
+      window.location.href = "{% url 'login_page' %}";  // ⚠️ replace 'home' with your real url name
+    }, 1500);
+  </script>
+</head>
+<body>
+  <div class="splash">
+    <img src="{% static 'images/logo.jpg' %}" alt="App Logo">
+    <h1>My App Name</h1>
+  </div>
+</body>
+</html>

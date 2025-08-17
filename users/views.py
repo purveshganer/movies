@@ -2,6 +2,10 @@ from django.shortcuts import render
 
 # Create your views here.
 
+# Show start_page page
+def start_page(request):
+    return render(request, "users/start_page.html")
+
 # Show login page
 def login_page(request):
     return render(request, "users/login.html")

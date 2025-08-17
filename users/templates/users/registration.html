@@ -1,6 +1,6 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'users/styling/login_registration.css' %}">
-<script src="{% static 'users/js_files/auth.js' %}"></script>
+<link rel="stylesheet" href="{% static 'styling/login_registration.css' %}">
+<script src="{% static 'js_files/auth.js' %}"></script>
 
 <!doctype html>
 <html lang="en">
@@ -14,7 +14,7 @@
   <main class="page">
     <section class="card" aria-labelledby="register-title">
       <h1 id="register-title">Create your account</h1>
-      <p class="subtitle">It’s fast and free.</p>
+      <p class="subtitle">It's fast and free.</p>
 
       <form id="registerForm" action="/api/register" method="post" novalidate>
         <div class="input">
