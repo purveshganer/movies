@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styling/header.css' %}">
+    
+</head>
+<body>
+    <!-- Include Header -->
+    {% include "users/partials/header.html" %}
+
+    <div class="main-layout">
+        <!-- Optional filter/sidebar -->
+        {% block filter %}{% endblock %}
+
+        <!-- Page content -->
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

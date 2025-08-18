@@ -1,0 +1,20 @@
+{% load static %}
+
+<header class="site-header">
+    <!-- Logo as button to home -->
+    <a href="{% url 'home_page' %}">
+        <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="logo">
+    </a>
+
+    <!-- Search bar (can make functional later) -->
+    <form class="search-bar" method="get" action="#">
+        <input type="text" placeholder="Search your movie here...." name="q">
+        <button type="submit">🔍</button>
+    </form>
+
+    <!-- Login/Register buttons -->
+    <nav class="auth-links">
+        <a href="{% url 'login_page' %}">Login</a>
+        <a href="{% url 'register_page' %}">Register</a>
+    </nav>
+</header>

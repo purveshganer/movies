@@ -1,0 +1,82 @@
+/* Header styling */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #f8f8f8; /* light background */
+    border-bottom: 1px solid #ddd;
+}
+
+/* Logo styling */
+.site-header .logo {
+    width: 50px;   /* adjust size */
+    height: 50px;  /* keep square */
+    border-radius: 12px; /* makes it rounded-square */
+    object-fit: cover; /* keeps aspect ratio */
+}
+
+/* Center search bar */
+.search-bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* perfectly center horizontally */
+}
+
+/* Search bar */
+.search-bar input {
+    padding: 10px 12px;   /* height */
+    width: 300px;         /* length of search bar */
+    font-size: 17px;       /* 🔹 increase font size */
+    border: 1px solid #555;
+    border-radius: 6px;
+    background: #222;     /* dark background */
+    color: #fff;          /* white text */
+    text-align: center; 
+}
+
+.search-bar input::placeholder {
+    font-size: 17px;       /* 🔹 match placeholder font size */
+    color: #aaa;          /* gray placeholder */
+    text-align:     center; /* centers placeholder too */
+}
+
+
+.search-bar button {
+    padding: 9px 12px;
+    margin-left: 5px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Auth links */
+.auth-links a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #111;  /* dark gray for contrast */
+    border-bottom: 1px solid #333;
+}
+
+/* Global dark theme */
+body {
+    background-color: #000;   /* black background */
+    color: #fff;              /* white text */
+    margin: 0;
+    font-family: Arial, sans-serif;
+}

@@ -6,6 +6,10 @@ from django.shortcuts import render
 def start_page(request):
     return render(request, "users/start_page.html")
 
+# Show home page
+def home_page(request):
+    return render(request, "users/home.html")
+
 # Show login page
 def login_page(request):
     return render(request, "users/login.html")
