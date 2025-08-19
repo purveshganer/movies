@@ -1,5 +1,7 @@
 from django.shortcuts import render
-
+from django.core.paginator import Paginator
+from django.db.models import Q
+from imdb.models import TitleBasics
 # Create your views here.
 
 # Show start_page page
@@ -17,6 +19,30 @@ def login_page(request):
 # Show register page
 def register_page(request):
     return render(request, "users/registration.html")
+
+# Show search result
+def search(request):
+    query = request.GET.get("q", "").strip()  # remove whitespace safely
+
+    if query:
+        results = TitleBasics.objects.filter(
+            Q(primary_title__icontains=query) |
+            Q(original_title__icontains=query)
+        )
+    else:
+        # Default to latest releases if no search term
+        results = TitleBasics.objects.order_by("-start_year")
+
+    paginator = Paginator(results, 21)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(
+        request,
+        "users/home.html",
+        {"page_obj": page_obj, "query": query}
+    )
+
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt

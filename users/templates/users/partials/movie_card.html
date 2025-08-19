@@ -1,0 +1,9 @@
+<div class="movie-card">
+    <img src="{{ movie.poster_url|default:'/static/images/default-poster.jpg' }}" alt="{{ movie.primary_title }}">
+    <div class="movie-info">
+        <h3>{{ movie.primary_title }}</h3>
+        <p><strong>Year:</strong> {{ movie.start_year }}</p>
+        <p><strong>Genres:</strong> {{ movie.genres }}</p>
+        <p><strong>Rating:</strong> {{ movie.rating }}</p>
+    </div>
+</div>
