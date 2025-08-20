@@ -23,24 +23,22 @@
     </div>
 
     {% if page_obj.paginator.num_pages > 1 %}
-    <div class="pagination">
-        <div class="pagination-left">
-            {% if page_obj.has_previous %}
-                <a class="page-btn" href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">⏮ Previous</a>
-            {% endif %}
-        </div>
+    <div class="app-pagination">
+    <div class="app-pagination__left">
+        {% if page_obj.has_previous %}
+        <a class="app-page-btn" href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">⏮ Previous</a>
+        {% endif %}
+    </div>
 
-        <div class="pagination-center">
-            <span>
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-            </span>
-        </div>
+    <div class="app-pagination__center">
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    </div>
 
-        <div class="pagination-right">
-            {% if page_obj.has_next %}
-                <a class="page-btn" href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next ⏭</a>
-            {% endif %}
-        </div>
+    <div class="app-pagination__right">
+        {% if page_obj.has_next %}
+        <a class="app-page-btn" href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next ⏭</a>
+        {% endif %}
+    </div>
     </div>
     {% endif %}
 {% endblock %}
