@@ -1,55 +1,31 @@
-/* Header styling */
+/* -------------------------
+   GLOBAL DARK THEME
+-------------------------- */
+body {
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* -------------------------
+   HEADER
+-------------------------- */
 .site-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background: #f8f8f8; /* light background */
-    border-bottom: 1px solid #ddd;
+    padding: 12px 20px;
+    background: #111;  /* dark header */
+    border-bottom: 1px solid #333;
 }
 
 /* Logo styling */
 .site-header .logo {
-    width: 50px;   /* adjust size */
-    height: 50px;  /* keep square */
-    border-radius: 12px; /* makes it rounded-square */
-    object-fit: cover; /* keeps aspect ratio */
-}
-
-/* Center search bar */
-.search-bar {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); /* perfectly center horizontally */
-}
-
-/* Search bar */
-.search-bar input {
-    padding: 10px 12px;   /* height */
-    width: 300px;         /* length of search bar */
-    font-size: 17px;       /* 🔹 increase font size */
-    border: 1px solid #555;
-    border-radius: 6px;
-    background: #222;     /* dark background */
-    color: #fff;          /* white text */
-    text-align: center; 
-}
-
-.search-bar input::placeholder {
-    font-size: 17px;       /* 🔹 match placeholder font size */
-    color: #aaa;          /* gray placeholder */
-    text-align:     center; /* centers placeholder too */
-}
-
-
-.search-bar button {
-    padding: 9px 12px;
-    margin-left: 5px;
-    border: none;
-    background: #007bff;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    object-fit: cover;
 }
 
 /* Auth links */
@@ -59,24 +35,87 @@
     color: #007bff;
     font-weight: 500;
 }
-
 .auth-links a:hover {
     text-decoration: underline;
 }
 
-.site-header {
+/* -------------------------
+   SEARCH BAR
+-------------------------- */
+.search-bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 10px 12px;
+    width: 300px;
+    font-size: 17px;
+    border: 1px solid #555;
+    border-radius: 6px 0 0 6px;
+    background: #222;
+    color: #fff;
+    text-align: center;
+}
+
+.search-bar input::placeholder {
+    font-size: 17px;
+    color: #aaa;
+    text-align: center;
+}
+
+.search-bar button {
+    padding: 10px 14px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+}
+.pagination {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
-    background: #111;  /* dark gray for contrast */
-    border-bottom: 1px solid #333;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 12px;
+    background: #111;
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    text-align: center;
 }
 
-/* Global dark theme */
-body {
-    background-color: #000;   /* black background */
-    color: #fff;              /* white text */
-    margin: 0;
-    font-family: Arial, sans-serif;
+/* Style links as buttons */
+.page-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+}
+
+/* Hover effect */
+.page-btn:hover {
+    background: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Remove purple visited state */
+.page-btn:visited {
+    color: #fff !important;
+}
+
+/* Center page info */
+.pagination-center {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    font-weight: 500;
 }

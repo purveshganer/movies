@@ -1,5 +1,5 @@
 {% extends "users/base.html" %}
-{% load static %}
+{% load static %}s
 
 {% block title %}
     {{ query|default_if_none:"" |yesno:"Search Results,Latest Releases" }}
@@ -16,12 +16,7 @@
 
     <div class="movie-grid">
         {% for movie in page_obj %}
-            {# Replace with movie card partial later #}
-            <div class="movie-card">
-                <h3>{{ movie.primary_title }}</h3>
-                <p>Year: {{ movie.start_year }}</p>
-                <p>Genres: {{ movie.genres }}</p>
-            </div>
+            {% include "users/partials/movie_card.html" %}
         {% empty %}
             <p>No movies found.</p>
         {% endfor %}
@@ -29,17 +24,23 @@
 
     {% if page_obj.paginator.num_pages > 1 %}
     <div class="pagination">
-        {% if page_obj.has_previous %}
-            <a href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
+        <div class="pagination-left">
+            {% if page_obj.has_previous %}
+                <a class="page-btn" href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.previous_page_number }}">⏮ Previous</a>
+            {% endif %}
+        </div>
 
-        <span>
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
+        <div class="pagination-center">
+            <span>
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+        </div>
 
-        {% if page_obj.has_next %}
-            <a href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next</a>
-        {% endif %}
+        <div class="pagination-right">
+            {% if page_obj.has_next %}
+                <a class="page-btn" href="?{% if query %}q={{ query }}&{% endif %}page={{ page_obj.next_page_number }}">Next ⏭</a>
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 {% endblock %}

@@ -33,7 +33,7 @@ def search(request):
         # Default to latest releases if no search term
         results = TitleBasics.objects.order_by("-start_year")
 
-    paginator = Paginator(results, 21)
+    paginator = Paginator(results, 24)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
