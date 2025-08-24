@@ -14,7 +14,7 @@ class CreateLoggingFile:
         logger = logging.getLogger()
         logger.setLevel(logging.INFO)
 
-        file_handler = logging.FileHandler(os.path.join(base_path,"../../data_import","dataset/logs/",f"{self.table_name}.log"), "w")
+        file_handler = logging.FileHandler(os.path.join(base_path,"../","logs/",f"{self.table_name}.log"), "w")
         file_formatter = logging.Formatter("%(asctime)s  - %(levelname)s  -  %(message)s  ")
         file_handler.setFormatter(file_formatter)
 
