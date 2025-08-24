@@ -164,4 +164,4 @@ cython_debug/
 movies/config.py
 zopen_project.bat
 imdb/data_import/dataset/*
-movies/imdb/archieved/*
+imdb/archieved/*
