@@ -34,34 +34,25 @@ class TitleCrewImportScript(BaseImportScript):
         record = {self.record_to_model[key]:value for key, value in record.items()}
         tconst = TitleBasics.objects.get(tconst=record.get("tconst"))
         record["tconst"] = tconst
-        writers = record.get("writers")
-        if writers is not None and writers.strip() == r"\N":
-            record["writers"] = None
-        directors = record.get("directors")
-        if directors is not None and directors.strip() == r"\N":
-            record["directors"] = None
-        crew_obj, _ = TitleCrew.objects.get_or_create(title=tconst)
-        directors_list = record.get("directors")
-        if directors_list:
-            for director_id in directors_list:
-                if director_id and director_id != r"\N":
-                    try:
-                        director_obj = NameBasics.objects.get(nconst=director_id)
-                        crew_obj.directors.add(director_obj)
-                    except NameBasics.DoesNotExist:
-                        pass 
-        writers_list = record.get("writers")
-        if writers_list:
-            for writer_id in writers_list:
-                if writer_id and writer_id != r"\N":
-                    try:
-                        writer_obj = NameBasics.objects.get(nconst=writer_id)
-                        crew_obj.writers.add(writer_obj)
-                    except NameBasics.DoesNotExist:
-                        pass
-        record.pop("directors", None)
-        record.pop("writers", None)
-        
+        crew_obj, _ = TitleCrew.objects.get_or_create(tconst=tconst)
+
+        writers_list = record.pop("writers", None)
+        directors_list = record.pop("directors", None)
+
+        if writers_list and writers_list.strip() != r"\N":
+            writer_ids = [w.strip() for w in writers_list.split(",") if w.strip()]
+            writer_objs = NameBasics.objects.filter(nconst__in=writer_ids)
+            crew_obj.writers.set(writer_objs)   # overwrite
+        else:
+            crew_obj.writers.clear()  # optional, if you want empty
+            
+        # Directors
+        if directors_list and directors_list.strip() != r"\N":
+            director_ids = [d.strip() for d in directors_list.split(",") if d.strip()]
+            director_objs = NameBasics.objects.filter(nconst__in=director_ids)
+            crew_obj.directors.set(director_objs)
+        else:
+            crew_obj.directors.clear()
         return record
     
     def import_rows(self, records:list, n:int):
