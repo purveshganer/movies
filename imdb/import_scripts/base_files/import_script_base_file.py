@@ -60,7 +60,7 @@ class BaseImportScript:
             for record in records:
                 # Make sure record keys match the model fields exactly (e.g., 'name', 'age', etc.).
                 data_objects.append(self.model(**record))
-            self.model.objects.bulk_create(data_objects)
+            self.model.objects.bulk_create(data_objects, ignore_conflicts=True)
 
             logging.info(f"Successfully imported {n} records.")
         except Exception as e:

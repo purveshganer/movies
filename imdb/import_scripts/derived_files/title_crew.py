@@ -34,7 +34,7 @@ class TitleCrewImportScript(BaseImportScript):
         record = {self.record_to_model[key]:value for key, value in record.items()}
         tconst = TitleBasics.objects.get(tconst=record.get("tconst"))
         record["tconst"] = tconst
-        crew_obj, _ = TitleCrew.objects.get_or_create(tconst=tconst)
+        crew_obj, _ = TitleCrew.objects.update_or_create(tconst=tconst,defaults={})
 
         writers_list = record.pop("writers", None)
         directors_list = record.pop("directors", None)

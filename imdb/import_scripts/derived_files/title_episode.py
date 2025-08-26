@@ -18,10 +18,10 @@ class TitleEpisodeImportScript(BaseImportScript):
         super().__init__(TitleEpisode)
         self.records = super().base_reader(file_path=self.file_path, offset=0)
         self.record_to_model = {
-            "" : "tconst",
-            "" : "parent",
-            "" : "season_number",
-            "" : "episode_number",
+            "tconst" : "tconst",
+            "parentTconst" : "parent",
+            "seasonNumber" : "season_number",
+            "episodeNumber" : "episode_number",
         }
     
     def reader(self)->Optional[Dict[str,Any]]:
@@ -32,16 +32,20 @@ class TitleEpisodeImportScript(BaseImportScript):
 
     def preprocess(self, record)->dict:
         record = {self.record_to_model[key]:value for key, value in record.items()}
-        if not record.get("title") and record.get('title') == r"\N":
+        if not record.get("tconst") and record.get('tconst') == r"\N":
             return None
-        tconst = TitleBasics.objects.get(tconst = record.get("title"))
-        record["title"] = tconst 
-        writers = record.get("writers")
-        if writers is not None and writers.strip() == r"\N":
-            record["writers"] = None
-        directors = record.get("directors")
-        if directors is not None and directors.strip() == r"\N":
-            record["directors"] = None
+        tconst = TitleBasics.objects.get(tconst = record.get("tconst"))
+        record["tconst"] = tconst 
+        if not record.get("parent") and record.get('parent') == r"\N":
+            return None
+        parent = TitleBasics.objects.get(tconst = record.get("parent"))
+        record["parent"] = parent
+        season_number = record.get("season_number")
+        if season_number is not None and season_number.strip() == r"\N":
+            record["season_number"] = None
+        episode_number = record.get("episode_number")
+        if episode_number is not None and episode_number.strip() == r"\N":
+            record["episode_number"] = None
         return record
     
     def import_rows(self, records:list, n:int):
