@@ -15,14 +15,14 @@ class TitleBasics(models.Model):
     # genres: Comma-separated genres (e.g. Comedy,Drama)
 
     tconst = models.CharField(max_length=20, primary_key=True)
-    title_type = models.CharField(max_length=20)
-    primary_title = models.CharField(max_length=500)
-    original_title = models.CharField(max_length=500)
+    title_type = models.CharField(max_length=20, db_index=True)
+    primary_title = models.CharField(max_length=500, db_index=True)
+    original_title = models.CharField(max_length=500, db_index=True)
     is_adult = models.BooleanField()
-    start_year = models.IntegerField(null=True, blank=True)
+    start_year = models.IntegerField(null=True, blank=True, db_index=True)
     end_year = models.IntegerField(null=True, blank=True)
     runtime_minutes = models.IntegerField(null=True, blank=True)
-    genres = models.CharField(max_length=100)
+    genres = models.CharField(max_length=100, db_index=True)
 
 
 class NameBasics(models.Model):
@@ -35,11 +35,11 @@ class NameBasics(models.Model):
     # knownForTitles: Titles the person is well known for (tconst list)
 
     nconst = models.CharField(max_length=20, primary_key=True)
-    primary_name = models.CharField(max_length=255)
+    primary_name = models.CharField(max_length=255, db_index=True)
     birth_year = models.IntegerField(null=True, blank=True)
     death_year = models.IntegerField(null=True, blank=True)
-    primary_profession = models.CharField(max_length=255, null=True)
-    known_for_titles = models.CharField(max_length=500, null=True)  # Can be split later
+    primary_profession = models.CharField(max_length=255, null=True, db_index=True)
+    known_for_titles = models.CharField(max_length=500, null=True, db_index=True)  # Can be split later
 
 
 class TitleCrew(models.Model):

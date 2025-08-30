@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, F
 from imdb.models import TitleBasics, TitleRatings
 # Create your views here.
 
@@ -21,18 +21,27 @@ def register_page(request):
     return render(request, "users/registration.html")
 
 # Show search result
-# this is the code which only shows the movies in the order they came in.
 def search(request):
     query = request.GET.get("q", "").strip()  # remove whitespace safely
 
     if query:
-        results = TitleBasics.objects.filter(
-            Q(primary_title__icontains=query) |
-            Q(original_title__icontains=query)
-        )
+        results = (
+            TitleBasics.objects.filter(
+                Q(primary_title__icontains=query) |
+                Q(original_title__icontains=query)
+            )
+            .annotate(
+                average_rating=F("titleratings__average_rating"),
+                num_votes=F("titleratings__num_votes"),
+            )
+            .order_by("-average_rating"))
+
     else:
         # Default to latest releases if no search term
-        results = TitleBasics.objects.order_by("-start_year")
+        results = TitleBasics.objects.annotate(
+            average_rating=F("titleratings__average_rating"),
+            num_votes=F("titleratings__num_votes"),
+        ).order_by("-start_year")
 
     paginator = Paginator(results, 24)
     page_number = request.GET.get("page")
@@ -43,35 +52,6 @@ def search(request):
         "users/home.html",
         {"page_obj": page_obj, "query": query}
     )
-# def search(request):
-#     query = request.GET.get("q", "").strip()
-
-#     # Base queryset: join TitleBasics with TitleRatings
-#     results = TitleBasics.objects.all().select_related("titleratings")
-
-#     if query:
-#         results = results.filter(
-#             Q(primary_title__icontains=query) |
-#             Q(original_title__icontains=query)
-#         )
-
-#     # Order by rating desc, then votes desc (to break ties), then year desc
-#     results = results.order_by(
-#         "-titleratings__average_rating",
-#         "-titleratings__num_votes",
-#         "-start_year"
-#     )
-
-#     paginator = Paginator(results, 24)
-#     page_number = request.GET.get("page")
-#     page_obj = paginator.get_page(page_number)
-
-#     return render(
-#         request,
-#         "users/home.html",
-#         {"page_obj": page_obj, "query": query}
-#     )
-
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
