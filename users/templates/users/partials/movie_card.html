@@ -1,10 +1,30 @@
 <div class="movie-card">
-    <h3 class="movie-title">{{ movie.primary_title }}</h3>
-    <p><strong>Title Type:</strong> {{ movie.title_type }}</p>
-    <p><strong>Original Title:</strong> {{ movie.original_title }}</p>
-    <p><strong>Adult:</strong> {{ movie.is_adult|yesno:"Yes,No" }}</p>
-    <p><strong>Start Year:</strong> {{ movie.start_year|default:"N/A" }}</p>
-    <p><strong>End Year:</strong> {{ movie.end_year|default:"N/A" }}</p>
-    <p><strong>Runtime:</strong> {{ movie.runtime_minutes|default:"N/A" }} min</p>
-    <p><strong>Genres:</strong> {{ movie.genres|default:"N/A" }}</p>
+    <h3 class="movie-title">
+        {{ movie.primary_title|default:movie.original_title }}
+    </h3>
+
+    {% if movie.original_title and movie.original_title != movie.primary_title %}
+        <p><strong>Original Title:</strong> {{ movie.original_title }}</p>
+    {% endif %}
+
+    {% if movie.title_type %}<p><strong>Type:</strong> {{ movie.title_type }}</p>{% endif %}
+    {% if movie.start_year %}
+        <p><strong>Year:</strong> {{ movie.start_year }}{% if movie.end_year %}–{{ movie.end_year }}{% endif %}</p>
+    {% endif %}
+    {% if movie.runtime_minutes %}<p><strong>Runtime:</strong> {{ movie.runtime_minutes }} min</p>{% endif %}
+    {% if movie.genres %}<p><strong>Genres:</strong> {{ movie.genres }}</p>{% endif %}
+    {% if movie.is_adult is not None %}
+        <p><strong>Adult:</strong> {% if movie.is_adult %}Yes{% else %}No{% endif %}</p>
+    {% endif %}
+    {% if movie.tconst %}<p><strong>ID:</strong> {{ movie.tconst }}</p>{% endif %}
+
+    <div class="rating">
+        ⭐
+        {% if movie.average_rating %}
+            <span>{{ movie.average_rating }}</span>
+        {% else %}
+            <span>N/A</span>
+        {% endif %}
+        {% if movie.num_votes %}<small>({{ movie.num_votes }} votes)</small>{% endif %}
+    </div>
 </div>

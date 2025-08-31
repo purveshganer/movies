@@ -34,7 +34,8 @@ def search(request):
                 average_rating=F("titleratings__average_rating"),
                 num_votes=F("titleratings__num_votes"),
             )
-            .order_by("-average_rating"))
+            .order_by("-average_rating")
+        )
 
     else:
         # Default to latest releases if no search term

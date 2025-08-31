@@ -1,5 +1,5 @@
 {% extends "users/base.html" %}
-{% load static %}s
+{% load static %}
 
 {% block title %}
     {{ query|default_if_none:"" |yesno:"Search Results,Latest Releases" }}
@@ -16,7 +16,7 @@
 
     <div class="movie-grid">
         {% for movie in page_obj %}
-            {% include "users/partials/movie_card.html" %}
+            {% include "users/partials/movie_card.html" with movie=movie %}
         {% empty %}
             <p>No movies found.</p>
         {% endfor %}
